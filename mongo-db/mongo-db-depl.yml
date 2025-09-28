@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  namespace: mongo-db 
+  labels:
+    app: mongo-db 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-db
+  template:
+    metadata:
+      labels:
+        app: mongo-db
+    spec:
+      tolerations:
+      - key: "key"
+        operator: "Equal"
+        value: "db"
+        effect: "NoSchedule"
+    
+      containers:
+      - name: mongodb
+        image: mongo
+        ports:
+        - containerPort: 80
+        envFrom:
+        - secretRef:
+           name: mongo-db-secret
+        volumeMounts:
+         - mountPath: /data/db 
+           name: pv-mongo-db
+      volumes:
+      - name: pv-mongo-db 
+        persistentVolumeClaim:
+          claimName: mongodb-pvc  
+       

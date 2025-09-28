@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fe-deployment
+  namespace: fe 
+  labels:
+    app: fe
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fe
+  template:
+    metadata:
+      labels:
+        app: fe
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+         - mountPath: /usr/share/nginx/html
+           name: fe-volume
+      volumes:
+      - name: fe-volume
+        emptyDir:
+          sizeLimit: 500Mi
