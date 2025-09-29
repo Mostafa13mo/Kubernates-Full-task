@@ -6,9 +6,12 @@ metadata:
 spec:
   podSelector: {}       
   policyTypes:
-    - Ingress
+  - Ingress
   ingress:
-    - from:
-        - namespaceSelector:
-            matchLabels:
-              access: mongo-express
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          name: mongo-express
+    ports:
+    - protocol: TCP
+      port: 27017

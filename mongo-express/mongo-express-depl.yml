@@ -19,8 +19,11 @@ spec:
       - name: mongo-express
         image: mongo-express:latest
         ports:
-        - containerPort: 80
+        - containerPort: 8081
         envFrom:
-            - configMapRef:
-                 name: mongo-express-config
+        - configMapRef:
+            name: mongo-express-config
+        env:
+        - name: ME_CONFIG_MONGODB_URL
+          value: "mongodb://admin:admin123@mongodb-service.mongo-db.svc.cluster.local:27017/admin"
        

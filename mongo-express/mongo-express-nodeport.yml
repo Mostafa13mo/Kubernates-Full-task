@@ -9,5 +9,5 @@ spec:
     app: mongo-express
   ports:
     - port: 8081
-      targetPort: 80
+      targetPort: 8081
       nodePort: 30015
